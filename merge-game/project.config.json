@@ -1,0 +1,14 @@
+{
+  "description": "合成方块记 - 微信小游戏",
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "postcss": true,
+    "minified": true
+  },
+  "compileType": "game",
+  "libVersion": "game",
+  "appid": "wxYOUR_APPID_HERE",
+  "projectname": "merge-blocks",
+  "condition": {}
+}

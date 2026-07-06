@@ -1,0 +1,13 @@
+{
+  "name": "merge-blocks-game",
+  "version": "1.0.0",
+  "description": "合成方块记 - WeChat mini game starter",
+  "private": true,
+  "scripts": {
+    "test": "npx tsx tests/grid.test.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.4.0"
+  }
+}
