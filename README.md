@@ -31,8 +31,8 @@ wechat-mini-games/
 ## 快速开始
 
 ```bash
-git clone https://github.com/liuguolai/wechat-mini-games.git
-cd wechat-mini-games
+git clone https://github.com/liuguolai/mini-games.git
+cd mini-games
 npm install
 npm test
 ```
