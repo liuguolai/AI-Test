@@ -1,0 +1,8 @@
+{
+  "name": "@mini-games/shared",
+  "version": "1.0.0",
+  "description": "Shared utilities for WeChat mini games",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts"
+}

@@ -1,0 +1,18 @@
+{
+  "name": "wechat-mini-games",
+  "version": "1.0.0",
+  "private": true,
+  "description": "微信小游戏 Monorepo",
+  "workspaces": [
+    "packages/*",
+    "games/*"
+  ],
+  "scripts": {
+    "test": "npm test -w @mini-games/merge-blocks",
+    "test:merge-blocks": "npm test -w @mini-games/merge-blocks"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.4.0"
+  }
+}

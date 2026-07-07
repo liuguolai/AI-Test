@@ -1,0 +1,21 @@
+node_modules/
+dist/
+build/
+library/
+temp/
+local/
+
+# Cocos Creator
+*.meta
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+
+# Env
+.env
+.env.*
