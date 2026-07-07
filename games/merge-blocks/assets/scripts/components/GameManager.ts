@@ -1,14 +1,10 @@
-import { _decorator, Component, Node, Label, Color, UITransform, Graphics, EventTouch, tween, Vec3 } from 'cc';
+import { _decorator, Component, Node, Label, Color, UITransform, Graphics, tween, Vec3 } from 'cc';
 import { GameState } from '../core/GameState';
 import { GameConfig } from '../core/GameConfig';
-import { AdManager } from './AdManager';
+import { AdManager } from '../../../../../packages/shared/src/AdManager';
 
 const { ccclass, property } = _decorator;
 
-/**
- * Main game controller — attach to Canvas root node.
- * Wires UI buttons to game logic and refreshes the grid display.
- */
 @ccclass('GameManager')
 export class GameManager extends Component {
     @property(Node)
@@ -100,7 +96,7 @@ export class GameManager extends Component {
         AdManager.showRewardedVideo({
             onSuccess: () => {
                 if (this.state.revive()) {
-                    this.gameOverPanel && (this.gameOverPanel.active = false);
+                    if (this.gameOverPanel) this.gameOverPanel.active = false;
                     this.refreshUI();
                 }
             },
@@ -169,7 +165,6 @@ export class GameManager extends Component {
         g.clear();
         const half = this.cellSize / 2;
 
-        // Empty cell background
         g.fillColor = new Color(60, 60, 80, 255);
         g.roundRect(-half, -half, this.cellSize, this.cellSize, 8);
         g.fill();

@@ -1,4 +1,5 @@
 import { GridModel, TurnResult } from './GridModel';
+import { StorageUtil } from '../../../../../packages/shared/src/StorageUtil';
 
 export type GamePhase = 'playing' | 'gameover' | 'reviving';
 
@@ -24,31 +25,7 @@ export class GameState {
 
     constructor() {
         this.grid = new GridModel();
-        this.bestScore = this.loadBestScore();
-    }
-
-    private loadBestScore(): number {
-        try {
-            if (typeof wx !== 'undefined' && wx.getStorageSync) {
-                return wx.getStorageSync(STORAGE_KEY) || 0;
-            }
-            if (typeof localStorage !== 'undefined') {
-                return parseInt(localStorage.getItem(STORAGE_KEY) || '0', 10);
-            }
-        } catch { /* ignore */ }
-        return 0;
-    }
-
-    saveBestScore(): void {
-        if (this.score <= this.bestScore) return;
-        this.bestScore = this.score;
-        try {
-            if (typeof wx !== 'undefined' && wx.setStorageSync) {
-                wx.setStorageSync(STORAGE_KEY, this.bestScore);
-            } else if (typeof localStorage !== 'undefined') {
-                localStorage.setItem(STORAGE_KEY, String(this.bestScore));
-            }
-        } catch { /* ignore */ }
+        this.bestScore = StorageUtil.getNumber(STORAGE_KEY);
     }
 
     reset(): void {
@@ -59,7 +36,6 @@ export class GameState {
         this.canRevive = true;
     }
 
-    /** Player taps "投放" button */
     spawn(): TurnResult | null {
         if (this.phase !== 'playing') return null;
 
@@ -81,7 +57,6 @@ export class GameState {
         return result;
     }
 
-    /** After watching rewarded video ad */
     revive(): boolean {
         if (this.phase !== 'gameover' || !this.canRevive) return false;
 
@@ -95,6 +70,13 @@ export class GameState {
         this.reset();
     }
 
+    private saveBestScore(): void {
+        if (this.score > this.bestScore) {
+            this.bestScore = this.score;
+        }
+        StorageUtil.setNumber(STORAGE_KEY, this.bestScore);
+    }
+
     snapshot(): GameSnapshot {
         return {
             score: this.score,
@@ -106,9 +88,3 @@ export class GameState {
         };
     }
 }
-
-/** WeChat global type stub for non-WeChat environments */
-declare const wx: {
-    getStorageSync(key: string): number;
-    setStorageSync(key: string, value: number): void;
-} | undefined;

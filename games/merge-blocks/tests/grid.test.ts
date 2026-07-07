@@ -1,6 +1,6 @@
 /**
- * Standalone test runner for core game logic.
- * Run: npx tsx tests/grid.test.ts
+ * Run from repo root: npm test
+ * Or: npm test -w @mini-games/merge-blocks
  */
 import { GridModel } from '../assets/scripts/core/GridModel';
 import { GameState } from '../assets/scripts/core/GameState';

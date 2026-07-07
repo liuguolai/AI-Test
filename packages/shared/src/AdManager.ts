@@ -1,23 +1,22 @@
-/**
- * WeChat rewarded video ad wrapper.
- * Replace AD_UNIT_ID with your real ad unit from WeChat MP backend.
- */
-
-const AD_UNIT_ID = 'adunit-xxxxxxxxxxxxxxxx'; // TODO: replace after开通流量主
-
 export interface AdCallbacks {
     onSuccess: () => void;
     onFail: () => void;
 }
 
+let adUnitId = '';
 let rewardedAd: WechatMinigame.RewardedVideoAd | null = null;
 
+/** Call once at game launch with your ad unit ID */
+export function configureAds(unitId: string): void {
+    adUnitId = unitId;
+    rewardedAd = null;
+}
+
 function getRewardedAd(): WechatMinigame.RewardedVideoAd | null {
-    if (typeof wx === 'undefined') return null;
+    if (!adUnitId || typeof wx === 'undefined') return null;
 
     if (!rewardedAd) {
-        rewardedAd = wx.createRewardedVideoAd({ adUnitId: AD_UNIT_ID });
-
+        rewardedAd = wx.createRewardedVideoAd({ adUnitId });
         rewardedAd.onError((err) => {
             console.warn('[AdManager] ad error:', err);
         });
@@ -27,17 +26,13 @@ function getRewardedAd(): WechatMinigame.RewardedVideoAd | null {
 }
 
 export const AdManager = {
-    /** Preload ad on game start */
     preload(): void {
-        const ad = getRewardedAd();
-        ad?.load().catch(() => {});
+        getRewardedAd()?.load().catch(() => {});
     },
 
-    /** Show rewarded video — grants reward only if user watches fully */
     showRewardedVideo(callbacks: AdCallbacks): void {
         const ad = getRewardedAd();
 
-        // Dev / browser fallback: grant reward directly
         if (!ad) {
             console.log('[AdManager] no wx env, simulating ad success');
             callbacks.onSuccess();
@@ -46,11 +41,7 @@ export const AdManager = {
 
         const onClose = (res: { isEnded: boolean }) => {
             ad.offClose(onClose);
-            if (res.isEnded) {
-                callbacks.onSuccess();
-            } else {
-                callbacks.onFail();
-            }
+            res.isEnded ? callbacks.onSuccess() : callbacks.onFail();
         };
 
         ad.onClose(onClose);

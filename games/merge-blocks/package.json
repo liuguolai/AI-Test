@@ -1,0 +1,8 @@
+{
+  "name": "@mini-games/merge-blocks",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "tsx tests/grid.test.ts"
+  }
+}
