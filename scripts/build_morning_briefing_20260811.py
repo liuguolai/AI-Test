@@ -208,16 +208,6 @@ CATEGORIES = [
             "url": "https://www.bbc.co.uk/news/articles/cy9w1l5jr7lo",
         },
         {
-            "cn_title": "内塔尼亚胡拒特朗普15点加沙计划，白宫称或为选举言论",
-            "en_title": "Netanyahu rejects Trump's 15-point Gaza plan; White House sees campaign rhetoric",
-            "published": "22:43 2026年8月10日",
-            "cn_summary": "以色列总理称不接受解除哈马斯武装路线图；美方官员认为临近10月大选表态，仍推进国际稳定部队基地筹建。",
-            "en_summary": "Netanyahu rejected the Hamas disarmament roadmap; US officials view it as election rhetoric while stabilization force plans proceed.",
-            "source_cn": "BBC",
-            "source_en": "BBC",
-            "url": "https://www.bbc.co.uk/news/articles/ce3q5282ep3o",
-        },
-        {
             "cn_title": "BBC获南非检方文件：特种部队涉嫌谋杀顶尖侦探",
             "en_title": "BBC access to files suggests South African special forces murdered top detective",
             "published": "08:05 2026年8月10日",
