@@ -28,7 +28,8 @@ retryable() {
   case "$code" in
     408|425|429|500|502|503|504) return 0 ;;
   esac
-  if echo "$body" | grep -Eiq 'too many concurrent|rate[- ]limited|temporarily unavailable|service unavailable'; then
+  # Cursor returns HTTP 400 with resource_exhausted when Cloud Agent slots are full.
+  if echo "$body" | grep -Eiq 'resource_exhausted|too many concurrent|rate[- ]limited|temporarily unavailable|service unavailable|failed to start background composer'; then
     return 0
   fi
   return 1
