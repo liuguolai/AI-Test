@@ -1,0 +1,32 @@
+name: Trigger Cursor briefing
+
+on:
+  schedule:
+    # GitHub cron is UTC.
+    # 23:30 UTC = 07:30 Asia/Shanghai
+    # 09:30 UTC = 17:30 Asia/Shanghai
+    - cron: "30 23,9 * * *"
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Why this run was triggered"
+        required: false
+        default: "manual"
+
+concurrency:
+  group: trigger-briefing
+  cancel-in-progress: false
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: POST Cursor webhook (max 3 attempts)
+        env:
+          CURSOR_AUTOMATION_WEBHOOK_URL: ${{ secrets.CURSOR_AUTOMATION_WEBHOOK_URL }}
+          CURSOR_AUTOMATION_WEBHOOK_TOKEN: ${{ secrets.CURSOR_AUTOMATION_WEBHOOK_TOKEN }}
+          REASON: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.reason || 'schedule' }}
+          MAX_ATTEMPTS: "3"
+        run: bash scripts/trigger_cursor_webhook.sh
